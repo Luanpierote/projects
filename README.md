@@ -1,11 +1,13 @@
 # projects - Meu Portfólio de Projetos 
 
-* Este repositório reúne **todos os meus projetos**, incluindo desafios de programação e projetos maiores em diferentes linguagens e áreas.
+➤ Este repositório reúne **todos os meus projetos**, incluindo desafios de programação.
 
-## Estrutura
-- `desafios/` → pequenos desafios de programação em várias linguagens.
 
-* Cada projeto ou desafio possui seu próprio `README.md` com detalhes sobre:
+## 『 Estrutura 』
+
+➤ `desafios/` → pequenos desafios de programação em várias linguagens.
+
+➤ Cada projeto ou desafio possui seu próprio `README.md` com detalhes sobre:
 - O que faz
 - Linguagem utilizada
 - Como executar

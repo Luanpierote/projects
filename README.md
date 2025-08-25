@@ -1,6 +1,6 @@
 # projects - Meu Portfólio de Projetos 
 
-➤ Este repositório reúne **todos os meus projetos** de implementação de software , incluindo desafios de programação, separados em uma pasta organizada `challenges/`.
+➤ Este repositório reúne **todos os meus projetos** de implementação de software , incluindo desafios de programação separados em uma pasta organizada `challenges/`.
 
 
 ## 『 Estrutura 』

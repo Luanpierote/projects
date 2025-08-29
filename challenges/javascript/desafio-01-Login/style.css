@@ -1,77 +1,117 @@
-*{
+* {
     box-sizing: border-box;
     padding: 0px;
-    
+
 }
 
-body{
-    background-image: linear-gradient(180deg,#0fbab7,#222e2d);
-    background-attachment: fixed; /* mantém o fundo fixo na tela */
+body {
+    background-image: linear-gradient(180deg, #0fbab7, #222e2d);
+    background-attachment: fixed;
+    /* mantém o fundo fixo na tela */
     height: 100vh;
     margin: 0;
-    color:white;
-    font-family: "Inter",sans-serif;
-    
+    color: white;
+    font-family: "Inter", sans-serif;
+
 }
 
-.container{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      min-height: 100%;
-      overflow-y: auto; /* permite rolar se zoom empurrar elementos */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100%;
+    overflow-y: auto;
+    /* permite rolar se zoom empurrar elementos */
 }
 
-form{
+form {
     background-color: black;
     display: flex;
     flex-direction: column;
-    position: relative; /* para que o h3 se posicione em relação ao form */
+    position: relative;
+    /* para que o h3 se posicione em relação ao form */
     /* width: 300px;
-    margin: 200px auto; /* Centraliza no meio da página! */ 
+    margin: 200px auto; /* Centraliza no meio da página! */
     border-radius: 10px;
     padding: 40px;
     text-align: center;
-    
-    
 }
 
-input{
+input {
     display: block;
-    margin: 10px auto;
-    width: 280px;
-    height: 30px;
+    margin: 20px auto;
+    width: 240px;
+    height: 20px;
     border-radius: 3px;
     border: none;
     outline: none;
-    
+    border-bottom: 1px solid white;
+    background: none;
+    color: white;
 }
 
-input[type= "submit"]{
-    font-family:"Inter",sans-serif; 
+input[type="password"] [type="text"] {
+    margin-top: auto;
+}
+
+input[type="submit"] {
+    border: none;
+    font-family: "Inter", sans-serif;
     background-color: #0fbab7;
     border-radius: 5px;
-    
+    margin-top: 20%;
+    height: 35px;
 }
 
-input[type= "submit"]:hover{
+input[type="submit"]:hover {
     background-color: #6cc2c2;
 }
 
-input[placeholder]{
-    font-family:"Inter",sans-serif; ;
+input[placeholder] {
+    font-family: "Inter", sans-serif;
 }
 
-h3{
+.login-title {
+    position: relative;
+    /* margin: auto;  reduzir a largura ao máximo*/
+    padding: 0px;
+    border: 1px solid white;
+    line-height: 1%;
+    /* reduz altura da linha */
+    display: inline-block;
+    top: -20px;
+}
+
+.input-container {
+    position: relative;
+    /* referência para a label absoluta */
+    margin: 10px 0;
+    padding: 0px;
+}
+
+input:-webkit-autofill { /* remover o comportamento padrão do autocomplete */
+    -webkit-box-shadow: 0 0 0px 1000px black inset; /* mantém fundo preto */
+    -webkit-text-fill-color: white; /* mantém o texto branco */
+    transition: background-color 5000s ease-in-out 0s; /* evita piscar */
+}
+
+.label-input {
+    position: absolute;
+    left: 2px;
+    top: 20px;
+    pointer-events: none;
+    /* permite executar uma ação no input */
+    transition: .5s;
+}
+
+.input-container input:focus~.label-input { /* animação da label */
+    top: 0px;
+}
+
+h3 {
     position: relative;
     font-weight: 800;
     font-size: 40px;
-    margin-bottom: 40px; /* sobe o h3 sem mexer no fluxo dos inputs */
-}
-
-hr{
-    position: relative;
-     top: -40px; /* sobe o h3 30px sem mover os outros elementos */
-    width: 100%;
+    /* sobe o h3 sem mexer no fluxo dos inputs */
 }

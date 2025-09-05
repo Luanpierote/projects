@@ -7,14 +7,14 @@
 
     @font-face {
       font-family: "YoungSerif";
-      src: url("/recipe-page-main/assets/fonts/young-serif/YoungSerif-Regular.ttf")format("truetype");
+      src: url("./assets/fonts/young-serif/YoungSerif-Regular.ttf")format("truetype");
       font-weight: normal;
       font-style: normal;
     }
 
     @font-face {
       font-family: "Outfit";
-      src: url("/recipe-page-main/assets/fonts/outfit/Outfit-VariableFont_wght.ttf");
+      src: url("./assets/fonts/outfit/Outfit-VariableFont_wght.ttf");
       font-weight: 400;
       font-style: normal;
     }

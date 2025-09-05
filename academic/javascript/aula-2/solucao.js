@@ -1,31 +1,38 @@
 
-let salario = 5200;
-let salariominimo = 1250;
+class Dispesa{
+    constructor(sal,min){
+        this.salario = sal;
+        this.salariominimo = min;
+        this.dispesa = "";
+    }
 
-
-function imposto(taxa) {
+      imposto() {
     let resultado;
-    taxa = 0.1;
+    let sal = this.salario;
+    let min = this.salariominimo;
 
-    if (salario <= salariominimo * 3) {
-        let resultado;
-        resultado = salario * taxa;
-        console.log("imposto de 10%")
+    if (sal <= min * 3) {
+        resultado = sal * 0.1;
+        this.dispesa = " imposto de 10%"
+        return resultado
 
-
-    } else if (salario > salariominimo * 3 && salario <= salariominimo * 10) {
-        resultado = (salario) * taxa * 2;
-        console.log("imposto de 20%")
+    } else if (sal > min * 3 && sal <= min * 10) {
+        resultado = (sal) * 0.2;
+        this.dispesa = " imposto de 20%"
+        return resultado
 
     } else {
-        resultado = (salario) * taxa * 3;
-        console.log("imposto de 30%")
+        resultado = (sal) * 0.3;
+        this.dispesa = " imposto de 30%"
+        return resultado
     }
-    console.log(resultado);
 }
 
-imposto();
+}
 
+const Obj1 = new Dispesa(5200,1250)
+
+console.log("Voce pagará um valor final de: "+ Obj1.imposto() + ", com uma taxação de:"+ Obj1.dispesa);
 
 
 //le o salario de um funcionario

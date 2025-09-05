@@ -28,7 +28,7 @@
 
 ### Links
 
-- Solução URL: [URL da solução](https://github.com/Luanpierote/projects)
+- Página de Receita: [URL da solução](https://projects-six-ivory.vercel.app/)
 
 ## My process
 

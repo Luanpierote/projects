@@ -1,0 +1,1 @@
+export const PATH_SPACESHIP_IMAGE = "challenges\javascript\desafio-02-SpaceInvaders\src\assets\images\spaceship.png"

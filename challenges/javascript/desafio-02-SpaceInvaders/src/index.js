@@ -8,6 +8,8 @@ const ctx = canvas.getContext("2d"); /* Revisar */
 canvas.width = window.innerWidth; /* pode ser declarada sem window */
 canvas.height = window.innerHeight;
 
+ctx.imageSmoothingEnabled = false //suaviza os pixels da imagem
+
 /* por padrão, o padrão de posicionamento do eixo (0,0) 
 fica localizado no canto superior esquerdo */
 

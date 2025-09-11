@@ -1,4 +1,5 @@
-import { PATH_ENGINE_IMAGE, PATH_ENGINE_SPRITES, PATH_SPACESHIP_IMAGE } from "../utils/constants.js"
+import { PATH_ENGINE_IMAGE, PATH_ENGINE_SPRITES, PATH_SPACESHIP_IMAGE, INITIAL_FRAMES } from "../utils/constants.js"
+import Projectile from "./projectile.js";
 
 class Player {
     constructor(canvasWidth, canvasHeight) {
@@ -16,7 +17,7 @@ class Player {
         this.engineSprites = this.getImage(PATH_ENGINE_SPRITES);
 
         this.sx = 0;
-        this.framesCounter = 10;
+        this.framesCounter = INITIAL_FRAMES;
     }
 
     getImage(path) {
@@ -71,15 +72,22 @@ class Player {
     update() {
         //Decremento do contador do frame, e animação dos sprites
         if (this.framesCounter === 0) {
-            if (this.sx === 96) {
-                this.sx = 0;
-            } else {
-                this.sx += 48;
-            }
+            this.sx = this.sx === 96 ? 0 : this.sx + 48;
 
-            this.framesCounter = 10;
+            this.framesCounter = INITIAL_FRAMES;
         }
-        this.framesCounter --;
+        this.framesCounter--;
+    }
+
+    shoot(projectiles) {
+        const p = new Projectile({
+            x: this.position.x + this.width / 2 - 1,
+            y: this.position.y + 2,
+        },
+            -10
+        );
+
+        projectiles.push(p)
     }
 }
 

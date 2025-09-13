@@ -1,5 +1,5 @@
 import { PATH_ENGINE_IMAGE, PATH_ENGINE_SPRITES, PATH_SPACESHIP_IMAGE, INITIAL_FRAMES } from "../utils/constants.js"
-import Projectile from "./projectile.js";
+import Projectile from "./Projectile.js";
 
 class Player {
     constructor(canvasWidth, canvasHeight) {

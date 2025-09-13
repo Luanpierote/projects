@@ -1,10 +1,11 @@
 import Player from "./classes/Player.js";
-import Projectile from "./classes/projectile.js";
+import Projectile from "./classes/Projectile.js";
+import Invader from "./classes/Invader.js";
+import Grid from "./classes/Grid.js";
 
 /* o canvas funciona como uma folha de desenho */
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d"); /* Revisar */
-
 
 canvas.width = window.innerWidth; /* pode ser declarada sem window */
 canvas.height = window.innerHeight;
@@ -18,8 +19,11 @@ fica localizado no canto superior esquerdo */
 ctx.fillRect(100, 0, 100, 100)  desenho */
 
 const player = new Player(canvas.width, canvas.height) /* os argumentos serão enviados para o parametro do construtor */
+const grid = new Grid(3,6);
 
 const playerProjectiles = []; // lista de projéteis do jogador
+
+
 
 const keys = {
     left: false,
@@ -54,6 +58,9 @@ const gameLoop = () => {
     drawProjectiles();
     clearProjectiles();
 
+    grid.draw(ctx)
+    grid.update();
+    
     ctx.save(); // salvou o contexto do player
     
     

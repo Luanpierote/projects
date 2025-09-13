@@ -22,7 +22,7 @@ const player = new Player(canvas.width, canvas.height) /* os argumentos serão e
 const grid = new Grid(3,6);
 
 const playerProjectiles = []; // lista de projéteis do jogador
-
+const invadersProjectiles = [];
 
 
 const keys = {
@@ -35,7 +35,9 @@ const keys = {
 };
 
 const drawProjectiles = () =>{ //função responsável por desenhar todos os projéteis da tela
-    playerProjectiles.forEach((projectile) => { //percorrer cada objeto do array
+    const projectiles = [...playerProjectiles, ...invadersProjectiles] /* spread operator* para jogar todos os elementos nessa lista  */
+    
+    projectiles.forEach((projectile) => { //percorrer cada objeto do array
         projectile.draw(ctx);
         projectile.update();
     });
@@ -59,7 +61,7 @@ const gameLoop = () => {
     clearProjectiles();
 
     grid.draw(ctx)
-    grid.update();
+    grid.update(); 
     
     ctx.save(); // salvou o contexto do player
     
@@ -122,7 +124,14 @@ addEventListener("keyup", (e) => {
          keys.shoot.pressed = false;
          keys.shoot.released = true;
     }
-
 });
+
+setInterval(()=>{
+    const invader = grid.getRandomInvader()
+
+    if(invader){
+        invader.shoot(invadersProjectiles);
+    }
+},1000);
 
 gameLoop();

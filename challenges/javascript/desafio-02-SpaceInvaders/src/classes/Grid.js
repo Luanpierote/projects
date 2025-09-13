@@ -18,7 +18,7 @@ class Grid{
 
         for (let row = 0; row < this.rows; row += 1){
             //eixo y = linhas
-            for(let col =0 ; col < this.cols; col += 1){
+            for(let col = 0 ; col < this.cols; col += 1){
                 const invader = new Invader(
                     //eixo x = colunas
                     {
@@ -39,17 +39,19 @@ class Grid{
     }
 
     update(){
-       /*  if(chegouNaBordaDireita){
+         if(this.reachRightBoundary()){
             this.direction = "left";
             this.moveDown = true;
-        } else if(chegouNaBordaEsquerda){
+        } else if(this.reachLeftBoundary()){
             this.direction = "right";
             this.moveDown = true;
-        } */
+        } 
 
             this.invaders.forEach((invader) => {
                 if(this.moveDown){
                     invader.moveDown();
+                    invader.incrementVelocity(0.1);
+                    this.invaderVelocity = invader.velocity; /* salvando a velocidade atualizada do invasor, para quando for gerar novas grids */
                 }
 
                 if (this.direction === "right") invader.moveRight();
@@ -60,12 +62,21 @@ class Grid{
             this.moveDown = false;
     }
 
-    reachRightBoundary(){
-
+    reachRightBoundary(){ 
+         return this.invaders.some( /* funcao que retorna um booleano, para avaliar os parametros baseado em quantos invasores existem */
+            (invader) => invader.position.x + invader.width >= window.innerWidth /* somando com a largura do sprite do invasor, para o eixo x ficar posicionado no canto superior direito */
+        ); 
     }
 
     reachLeftBoundary(){
-        
+         return this.invaders.some( /* funcao que retorna um booleano, para avaliar os parametros baseado em quantos invasores existem */
+            (invader) => invader.position.x <= 0
+        );  
+    }
+
+    getRandomInvader(){ /* escolhendo um invasor aleatório para atirar */
+        const index = Math.floor(Math.random() * this.invaders.length)  /* método de números randomicos, que sempre arrendonda valores numericos para baixo */
+        return this.invaders[index];
     }
 
 }

@@ -51,6 +51,17 @@ const clearProjectiles = () =>{
         } 
     })
 
+};
+
+const checkShootInvaders = () => {  /* hitbox do Invasor = conferindo se algum projetil atingiu um invasor */
+    grid.invaders.forEach((invader, invaderIndex) =>{
+        playerProjectiles.some((projectile, projectileIndex) =>{
+            if(invader.hit(projectile)){ /* se algum invasor for atingido */
+                grid.invaders.splice(invaderIndex, 1); /* remove o invasor atingido, do array de invasor */
+                playerProjectiles.splice(projectileIndex, 1); /* remove o projetil que acertou o invasor, do array de projetil */
+            }
+        })
+    });
 }
 
 /* looping para renderizar repetidamente a movimentação do desenho na tela */
@@ -60,8 +71,10 @@ const gameLoop = () => {
     drawProjectiles();
     clearProjectiles();
 
+    checkShootInvaders();
+
     grid.draw(ctx)
-    grid.update(); 
+    grid.update();  
     
     ctx.save(); // salvou o contexto do player
     
@@ -126,12 +139,12 @@ addEventListener("keyup", (e) => {
     }
 });
 
-setInterval(()=>{
+ setInterval(()=>{ /* ativando a função de atirar dos invasores, a cada 1 segundo*/
     const invader = grid.getRandomInvader()
 
     if(invader){
         invader.shoot(invadersProjectiles);
     }
-},1000);
+},1000); 
 
 gameLoop();

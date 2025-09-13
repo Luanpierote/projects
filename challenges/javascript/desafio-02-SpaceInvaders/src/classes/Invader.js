@@ -59,6 +59,21 @@ class Invader {
 
         projectiles.push(p)
     }
+
+    hit(projectile) { /* hitbox do invasor */
+        return (
+             /* se a posição x do meu projetil, for maior
+              do que a posição x do meu invasor + largura dele = não atingido
+
+              se a posição x do meu projetil, for menor
+              do que a posição x do meu invasor  = não atingido */
+
+             projectile.position.x >= this.position.x &&
+             projectile.position.x <= this.position.x + this.width &&
+             projectile.position.y >= this.position.y &&
+             projectile.position.y <= this.position.y + this.height // condição para acertar o invasor
+        );
+    }
 }
 
 

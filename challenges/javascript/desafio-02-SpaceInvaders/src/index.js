@@ -3,6 +3,8 @@ import Projectile from "./classes/Projectile.js";
 import Invader from "./classes/Invader.js";
 import Grid from "./classes/Grid.js";
 import Particle from "./classes/Particles.js";
+import { GameState } from "./utils/constants.js";
+import Obstacle from "./classes/Obstacle.js";
 
 /* o canvas funciona como uma folha de desenho */
 const canvas = document.querySelector("canvas");
@@ -12,6 +14,8 @@ canvas.width = window.innerWidth; /* pode ser declarada sem window */
 canvas.height = window.innerHeight;
 
 ctx.imageSmoothingEnabled = false //suaviza os pixels da imagem
+
+let currentState = GameState.PLAYING; //estado do jogo
 
 /* por padrão, o padrão de posicionamento do eixo (0,0) 
 fica localizado no canto superior esquerdo */
@@ -25,6 +29,22 @@ const grid = new Grid(3, 6);
 const playerProjectiles = []; // lista de projéteis do jogador
 const invadersProjectiles = []; // lista de projéteis lançados
 const particles = []; //lista de particulas
+const obstacle = [];
+
+const initObstacle = () => {
+    const x = canvas.width / 2 - 50 /* centro da tela */
+    const y = canvas.height - 250;
+    const offset = canvas.width * 0.15; /* deslocamento do obstaculo */
+    const color = "crimson"
+
+    const obstacle1 = new Obstacle({ x: x - offset, y }, 100, 20, color);
+    const obstacle2 = new Obstacle({ x: x + offset, y }, 100, 20, color);
+
+    obstacle.push(obstacle1);
+    obstacle.push(obstacle2);
+}
+
+initObstacle();
 
 
 const keys = {
@@ -36,6 +56,10 @@ const keys = {
     }
 };
 
+const drawObstacles = () => {
+    obstacle.forEach((obstacle) => obstacle.draw(ctx));
+};
+
 const drawProjectiles = () => { //função responsável por desenhar todos os projéteis da tela
     const projectiles = [...playerProjectiles, ...invadersProjectiles] /* spread operator* para jogar todos os elementos nessa lista  */
 
@@ -45,8 +69,8 @@ const drawProjectiles = () => { //função responsável por desenhar todos os pr
     });
 }
 
-const drawParticles = () =>{
-    particles.forEach((particles)=>{
+const drawParticles = () => {
+    particles.forEach((particles) => {
         particles.draw(ctx)
         particles.update()
     });
@@ -64,10 +88,10 @@ const clearProjectiles = () => { /* deletar os projeteis do array */
 const clearParticles = () => {
 
     particles.forEach((particle, i) => {
-        if (particle.opacity <= 0){
-            particles.splice(i,1)
+        if (particle.opacity <= 0) {
+            particles.splice(i, 1)
         }
-        
+
     })
 };
 
@@ -81,12 +105,12 @@ const createExplosion = (position, size, color) => { /* criando particulas aleat
             {
                 x: Math.random() - 0.5 * 1.5,
                 y: Math.random() - 0.5 * 1.5,
-            }, 
+            },
             2,
-             color
-            );
+            color
+        );
 
-            particles.push(particle)
+        particles.push(particle)
     }
 
 }
@@ -98,10 +122,10 @@ const checkShootInvaders = () => {  /* hitbox do Invasor = conferindo se algum p
                 createExplosion({ //gerando particulas ao acertar o inimigo
                     x: invader.position.x + invader.width / 2,
                     y: invader.position.y + invader.height / 2,
-                    },
+                },
                     10,
                     "#941cff"
-                ); 
+                );
 
                 grid.invaders.splice(invaderIndex, 1); /* remove o invasor atingido, do array de invasor */
                 playerProjectiles.splice(projectileIndex, 1); /* remove o projetil que acertou o invasor, do array de projetil */
@@ -112,104 +136,143 @@ const checkShootInvaders = () => {  /* hitbox do Invasor = conferindo se algum p
 }
 
 const checkShootPlayer = () => {  /* hitbox do player = conferindo se algum projetil atingiu um player */
-        invadersProjectiles.some((projectile,i) => {
-            if (player.hit(projectile)) { /* se algum player for atingido */
+    invadersProjectiles.some((projectile, i) => {
+        if (player.hit(projectile)) { /* se algum player for atingido */
             invadersProjectiles.splice(i, 1); /* remove o projetil que acertou o invasor, do array de projetil */
-                gameOver();
-            }
-        });
-    };
-
-    const spawnGrid = () => { // geração de novos invasores
-        if(grid.invaders.length === 0){
-            grid.rows = Math.round(Math.random() * 9 + 1 )
-            grid.cols = Math.round(Math.random() * 9 + 1 )
-            grid.restart();
+            gameOver();
         }
-    }
+    });
+};
 
-    const gameOver = () =>{
-        createExplosion({ //gerando particulas ao acertar o player
-                    x: player.position.x + player.width / 2,
-                    y: player.position.y + player.height / 2,
-                    },
-                    10,
-                    "white"
-                ); 
-                createExplosion({ //gerando particulas ao acertar o player
-                    x: player.position.x + player.width / 2,
-                    y: player.position.y + player.height / 2,
-                    },
-                    10,
-                    "#4d9be6"
-                ); 
-                createExplosion({ //gerando particulas ao acertar o player
-                    x: player.position.x + player.width / 2,
-                    y: player.position.y + player.height / 2,
-                    },
-                    10,
-                    "crimson"
-                ); 
+const checkShootObstacle = () => {  /* hitbox do player = conferindo se algum projetil atingiu um player */
+    obstacle.forEach((obstacle) => {
+        playerProjectiles.some((projectile, i) => { /* verificando se o projetil do player colidiu com o obstaculo */
+            if (obstacle.hit(projectile)) {
+                playerProjectiles.splice(i, 1);
+                
+            }
+            
+        });
+        invadersProjectiles.some((projectile, i) => { /* verificando se o projetil do player colidiu com o obstaculo */
+            if (obstacle.hit(projectile)) {
+                invadersProjectiles.splice(i, 1);
+                
+            }
+            
+        });
+    })
 
+};
+
+
+
+const spawnGrid = () => { // geração de novos invasores
+    if (grid.invaders.length === 0) {
+        grid.rows = Math.round(Math.random() * 9 + 1)
+        grid.cols = Math.round(Math.random() * 9 + 1)
+        grid.restart();
     }
+}
+
+const gameOver = () => {
+    createExplosion({ //gerando particulas ao acertar o player
+        x: player.position.x + player.width / 2,
+        y: player.position.y + player.height / 2,
+    },
+        10,
+        "white"
+    );
+    createExplosion({ //gerando particulas ao acertar o player
+        x: player.position.x + player.width / 2,
+        y: player.position.y + player.height / 2,
+    },
+        10,
+        "#4d9be6"
+    );
+    createExplosion({ //gerando particulas ao acertar o player
+        x: player.position.x + player.width / 2,
+        y: player.position.y + player.height / 2,
+    },
+        10,
+        "crimson"
+    );
+
+    currentState = GameState.GAME_OVER;
+    player.alive = false;
+}
 
 
 /* const p = new Particle({x:350,y:500}, {x:-5,y:-2},50,"crimson") */
 
-/* looping para renderizar repetidamente a movimentação do desenho na tela */
+/* looping para renderizar repetidamente a movimentação do desenho na tela, constantemente */
 const gameLoop = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    /*    p.draw(ctx)  particulas  */
-    spawnGrid();
+    if (currentState == GameState.PLAYING) {
 
-    drawParticles();
-    drawProjectiles();
-    clearProjectiles();
-    clearParticles();
-    
-    checkShootPlayer();
-    checkShootInvaders();
+        /*    p.draw(ctx)  particulas  */
+        spawnGrid();
 
-    grid.draw(ctx)
-    /* grid.update();  */  
+        drawParticles();
+        drawProjectiles();
+        drawObstacles();
 
-    ctx.save(); // salvou o contexto do player
+        clearProjectiles();
+        clearParticles();
 
+        checkShootPlayer();
+        checkShootInvaders();
+        checkShootObstacle();
 
+        grid.draw(ctx)
+        grid.update(player.alive);
 
-    ctx.translate( //jogador movendo em torno do próprio eixos
-        player.position.x + player.width / 2,
-        player.position.y + player.height / 2
-    );
+        ctx.save(); // salvou o contexto do player
 
-    if (keys.shoot.pressed && keys.shoot.released) {
-        player.shoot(playerProjectiles)
-        keys.shoot.released = false;
+        ctx.translate( //jogador movendo em torno do próprio eixos
+            player.position.x + player.width / 2,
+            player.position.y + player.height / 2
+        );
 
+        if (keys.shoot.pressed && keys.shoot.released) {
+            player.shoot(playerProjectiles)
+            keys.shoot.released = false;
+
+        }
+
+        /* player.position.x += 1;  suaviza a animação, por estar sendo executado várias vezes */
+        if (keys.left && player.position.x >= 0) {
+            player.moveLeft();
+            ctx.rotate(-0.15); // está girando o eixo inteiro! Para resolver, é necessário deslocar o ctx(contexto)
+        }
+
+        /* desloca o eixo do canto superior esquerdo, para o superior direito, e realiza a comparação */
+        if (keys.right && player.position.x <= canvas.width - player.width) {
+            player.moveRight();
+            ctx.rotate(0.15);
+        }
+
+        ctx.translate( //restaurando a posição do eixo da página da página (necessária!)
+            - player.position.x - player.width / 2,
+            - player.position.y - player.height / 2
+        );
+
+        player.draw(ctx);
+
+        ctx.restore(); //restaurando o estado original do player, para ele não ficar girando em torno do próprio eixo
     }
 
-    /* player.position.x += 1;  suaviza a animação, por estar sendo executado várias vezes */
-    if (keys.left && player.position.x >= 0) {
-        player.moveLeft();
-        ctx.rotate(-0.15); // está girando o eixo inteiro! Para resolver, é necessário deslocar o ctx(contexto)
+    if (currentState === GameState.GAME_OVER) {
+        drawParticles();
+        drawProjectiles();
+        drawObstacles();
+
+        clearProjectiles();
+        clearParticles();
+
+        grid.draw(ctx);
+        grid.update(player.alive);
     }
-
-    /* desloca o eixo do canto superior esquerdo, para o superior direito, e realiza a comparação */
-    if (keys.right && player.position.x <= canvas.width - player.width) {
-        player.moveRight();
-        ctx.rotate(0.15);
-    }
-
-    ctx.translate( //restaurando a posição do eixo da página da página (necessária!)
-        - player.position.x - player.width / 2,
-        - player.position.y - player.height / 2
-    );
-
-    player.draw(ctx);
-
-    ctx.restore(); //restaurando o estado original do player, para ele não ficar girando em torno do próprio eixo
-
     window.requestAnimationFrame(gameLoop) /* só chama a função quando necessário*/
 };
 

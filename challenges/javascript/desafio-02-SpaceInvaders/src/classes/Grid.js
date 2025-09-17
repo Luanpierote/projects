@@ -38,7 +38,7 @@ class Grid{
    
     }
 
-    update(){
+    update(playerStatus){
          if(this.reachRightBoundary()){
             this.direction = "left";
             this.moveDown = true;
@@ -46,6 +46,8 @@ class Grid{
             this.direction = "right";
             this.moveDown = true;
         } 
+
+        if(!playerStatus) this.moveDown=false /* se receber um status diferente,do player. Então pare de descer as grids */
 
             this.invaders.forEach((invader) => {
                 if(this.moveDown){

@@ -111,6 +111,49 @@ const checkShootInvaders = () => {  /* hitbox do Invasor = conferindo se algum p
     });
 }
 
+const checkShootPlayer = () => {  /* hitbox do player = conferindo se algum projetil atingiu um player */
+        invadersProjectiles.some((projectile,i) => {
+            if (player.hit(projectile)) { /* se algum player for atingido */
+            invadersProjectiles.splice(i, 1); /* remove o projetil que acertou o invasor, do array de projetil */
+                gameOver();
+            }
+        });
+    };
+
+    const spawnGrid = () => { // geração de novos invasores
+        if(grid.invaders.length === 0){
+            grid.rows = Math.round(Math.random() * 9 + 1 )
+            grid.cols = Math.round(Math.random() * 9 + 1 )
+            grid.restart();
+        }
+    }
+
+    const gameOver = () =>{
+        createExplosion({ //gerando particulas ao acertar o player
+                    x: player.position.x + player.width / 2,
+                    y: player.position.y + player.height / 2,
+                    },
+                    10,
+                    "white"
+                ); 
+                createExplosion({ //gerando particulas ao acertar o player
+                    x: player.position.x + player.width / 2,
+                    y: player.position.y + player.height / 2,
+                    },
+                    10,
+                    "#4d9be6"
+                ); 
+                createExplosion({ //gerando particulas ao acertar o player
+                    x: player.position.x + player.width / 2,
+                    y: player.position.y + player.height / 2,
+                    },
+                    10,
+                    "crimson"
+                ); 
+
+    }
+
+
 /* const p = new Particle({x:350,y:500}, {x:-5,y:-2},50,"crimson") */
 
 /* looping para renderizar repetidamente a movimentação do desenho na tela */
@@ -118,17 +161,18 @@ const gameLoop = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     /*    p.draw(ctx)  particulas  */
-    
+    spawnGrid();
+
     drawParticles();
     drawProjectiles();
     clearProjectiles();
     clearParticles();
     
-
+    checkShootPlayer();
     checkShootInvaders();
 
     grid.draw(ctx)
-    /*  grid.update();   */
+    /* grid.update();  */  
 
     ctx.save(); // salvou o contexto do player
 

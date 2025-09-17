@@ -79,6 +79,11 @@ class Grid{
         return this.invaders[index];
     }
 
+    restart(){ // Conserva as variáveis e atributos de novos invasores que surgirem
+        this.invaders = this.init();
+        this.direction = "right";
+    }
+
 }
 
 export default Grid;

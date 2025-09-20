@@ -3,6 +3,9 @@ import Grid from "./classes/Grid.js";
 import Particle from "./classes/Particles.js";
 import { GameState } from "./utils/constants.js";
 import Obstacle from "./classes/Obstacle.js";
+import SoundEffects from "./classes/SoundEffects.js";
+
+const soundEffects = new SoundEffects();
 
 const startScreen = document.querySelector(".start-screen");
 const gameOverScreen = document.querySelector(".game-over");
@@ -148,6 +151,8 @@ const checkShootInvaders = () => {  /* hitbox do Invasor = conferindo se algum p
     grid.invaders.forEach((invader, invaderIndex) => {
         playerProjectiles.some((projectile, projectileIndex) => {
             if (invader.hit(projectile)) { /* se algum invasor for atingido */
+                soundEffects.playHitSound();
+
                 createExplosion({ //gerando particulas ao acertar o inimigo
                     x: invader.position.x + invader.width / 2,
                     y: invader.position.y + invader.height / 2,
@@ -172,6 +177,7 @@ const checkShootInvaders = () => {  /* hitbox do Invasor = conferindo se algum p
 const checkShootPlayer = () => {  /* hitbox do player = conferindo se algum projetil atingiu um player */
     invadersProjectiles.some((projectile, i) => {
         if (player.hit(projectile)) { /* se algum player for atingido */
+            soundEffects.playExplosionSound();
             invadersProjectiles.splice(i, 1); /* remove o projetil que acertou o invasor, do array de projetil */
             gameOver();
         }
@@ -202,6 +208,8 @@ const checkShootObstacle = () => {  /* hitbox do player = conferindo se algum pr
 
 const spawnGrid = () => { // geração de novos invasores
     if (grid.invaders.length === 0) {
+        soundEffects.playNextLevelSound();
+        
         grid.rows = Math.round(Math.random() * 9 + 1)
         grid.cols = Math.round(Math.random() * 9 + 1)
         grid.restart();
@@ -273,6 +281,7 @@ const gameLoop = () => {
         );
 
         if (keys.shoot.pressed && keys.shoot.released) {
+            soundEffects.playShootSound();
             player.shoot(playerProjectiles)
             keys.shoot.released = false;
 

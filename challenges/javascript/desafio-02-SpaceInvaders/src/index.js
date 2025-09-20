@@ -26,6 +26,26 @@ ctx.imageSmoothingEnabled = false //suaviza os pixels da imagem
 
 let currentState = GameState.START; //estado do jogo
 
+const gameData = {
+    score: 0,
+    level: 1,
+    high: 0,
+}
+
+const incrementScore = (value) => {
+    gameData.score += value
+
+    if(gameData.score > gameData.high){
+        gameData.high = gameData.score;
+    }
+}
+
+const showGameData = () => {
+    scoreElement.textContent = gameData.score;
+    levelElement.textContent = gameData.level;
+    highElement.textContent = gameData.high;
+}
+
 /* por padrão, o padrão de posicionamento do eixo (0,0) 
 fica localizado no canto superior esquerdo */
 
@@ -136,6 +156,11 @@ const checkShootInvaders = () => {  /* hitbox do Invasor = conferindo se algum p
                     "#941cff"
                 );
 
+                //INCREMENTAR O SCORE
+
+                incrementScore(10);
+
+
                 grid.invaders.splice(invaderIndex, 1); /* remove o invasor atingido, do array de invasor */
                 playerProjectiles.splice(projectileIndex, 1); /* remove o projetil que acertou o invasor, do array de projetil */
 
@@ -180,7 +205,10 @@ const spawnGrid = () => { // geração de novos invasores
         grid.rows = Math.round(Math.random() * 9 + 1)
         grid.cols = Math.round(Math.random() * 9 + 1)
         grid.restart();
+
+        gameData.level += 1
     }
+    
 }
 
 const gameOver = () => {
@@ -219,7 +247,7 @@ const gameLoop = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     if (currentState == GameState.PLAYING) {
-
+        showGameData();
         /*    p.draw(ctx)  particulas  */
         spawnGrid();
 
@@ -325,7 +353,7 @@ buttonPlay.addEventListener("click", ()=>{
     }
 }, 1000);
 
-})
+});
 
 buttonRestart.addEventListener("click", ()=>{
     currentState = GameState.PLAYING
@@ -337,8 +365,11 @@ buttonRestart.addEventListener("click", ()=>{
 
     invadersProjectiles.length = 0 /* reiniciando o array de projéteis */
 
-    gameOverScreen.remove()
+    gameOverScreen.remove();
 
-})
+    gameData.score = 0
+    gameData.level = 0
+
+});
 
 gameLoop();

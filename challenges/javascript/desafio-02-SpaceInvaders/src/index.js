@@ -1,10 +1,19 @@
 import Player from "./classes/Player.js";
-import Projectile from "./classes/Projectile.js";
-import Invader from "./classes/Invader.js";
 import Grid from "./classes/Grid.js";
 import Particle from "./classes/Particles.js";
 import { GameState } from "./utils/constants.js";
 import Obstacle from "./classes/Obstacle.js";
+
+const startScreen = document.querySelector(".start-screen");
+const gameOverScreen = document.querySelector(".game-over");
+const scoreUI = document.querySelector(".score-ui");
+const scoreElement = document.querySelector(".score > span");
+const levelElement = document.querySelector(".level > span");
+const highElement = document.querySelector(".high > span");
+const buttonPlay = document.querySelector(".button-play");
+const buttonRestart = document.querySelector(".button-restart");
+
+gameOverScreen.remove();
 
 /* o canvas funciona como uma folha de desenho */
 const canvas = document.querySelector("canvas");
@@ -15,7 +24,7 @@ canvas.height = window.innerHeight;
 
 ctx.imageSmoothingEnabled = false //suaviza os pixels da imagem
 
-let currentState = GameState.PLAYING; //estado do jogo
+let currentState = GameState.START; //estado do jogo
 
 /* por padrão, o padrão de posicionamento do eixo (0,0) 
 fica localizado no canto superior esquerdo */
@@ -199,6 +208,7 @@ const gameOver = () => {
 
     currentState = GameState.GAME_OVER;
     player.alive = false;
+    document.body.append(gameOverScreen)
 }
 
 
@@ -300,12 +310,35 @@ addEventListener("keyup", (e) => {
     }
 });
 
-setInterval(() => { /* ativando a função de atirar dos invasores, a cada 1 segundo */
+
+
+buttonPlay.addEventListener("click", ()=>{
+    startScreen.remove()
+    scoreUI.style.display = "block"
+    currentState = GameState.PLAYING;
+
+    setInterval(() => { /* ativando a função de atirar dos invasores, a cada 1 segundo */
     const invader = grid.getRandomInvader()
 
     if (invader) {
         invader.shoot(invadersProjectiles);
     }
 }, 1000);
+
+})
+
+buttonRestart.addEventListener("click", ()=>{
+    currentState = GameState.PLAYING
+    player.alive = true
+
+
+    grid.invaders.length = 0; /* reiniciando um array */
+    grid.invaderVelocity = 1;
+
+    invadersProjectiles.length = 0 /* reiniciando o array de projéteis */
+
+    gameOverScreen.remove()
+
+})
 
 gameLoop();

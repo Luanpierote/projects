@@ -23,7 +23,7 @@ class Grid{
                     //eixo x = colunas
                     {
                     x:col * 50 + 20,
-                    y:row * 37 + 20,
+                    y:row * 37 + 120,
                     },
                     this.invaderVelocity
                 );

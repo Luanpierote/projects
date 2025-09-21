@@ -8,6 +8,9 @@ import SoundEffects from "./classes/SoundEffects.js";
 const soundEffects = new SoundEffects();
 
 const startScreen = document.querySelector(".start-screen");
+const buttonControls = document.querySelector(".button-controls");
+const buttonReturn = document.querySelector(".button-return");
+const controlsScreen = document.querySelector(".controls-screen");
 const gameOverScreen = document.querySelector(".game-over");
 const scoreUI = document.querySelector(".score-ui");
 const scoreElement = document.querySelector(".score > span");
@@ -255,6 +258,8 @@ const gameLoop = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     if (currentState == GameState.PLAYING) {
+
+
         showGameData();
         /*    p.draw(ctx)  particulas  */
         spawnGrid();
@@ -348,21 +353,42 @@ addEventListener("keyup", (e) => {
 });
 
 
+const showScreen = (screen) => {
+    // lista com todas as telas possíveis
+    const screens = [startScreen, controlsScreen];
+    
+    screens.forEach(s => s.classList.remove("active")); // tira a classe "active" de todos os elementos do array, menos o que eu escolhi
+    screen.classList.add("active"); // adiciona "active" apenas na tela que eu quero mostrar
+}
 
-buttonPlay.addEventListener("click", ()=>{
-    startScreen.remove()
-    scoreUI.style.display = "block"
+// Início do jogo
+buttonPlay.addEventListener("click", () => {
+    //tive que fazer uma adaptação por ser uma HUD do jogo, e não uma tela interativa
+    scoreUI.style.display = "block";
+    showScreen(scoreUI);
     currentState = GameState.PLAYING;
 
-    setInterval(() => { /* ativando a função de atirar dos invasores, a cada 1 segundo */
-    const invader = grid.getRandomInvader()
-
-    if (invader) {
-        invader.shoot(invadersProjectiles);
-    }
-}, 1000);
-
+    setInterval(() => {
+        const invader = grid.getRandomInvader();
+        if (invader) {
+            invader.shoot(invadersProjectiles);
+        }
+    }, 1000);
 });
+
+// Ir para tela de controles
+buttonControls.addEventListener("click", () => {
+    showScreen(controlsScreen);
+    currentState = GameState.OPTION;
+});
+
+// Retornar para o menu
+buttonReturn.addEventListener("click", () => {
+    showScreen(startScreen);
+    currentState = GameState.START;
+});
+
+
 
 buttonRestart.addEventListener("click", ()=>{
     currentState = GameState.PLAYING
@@ -380,5 +406,8 @@ buttonRestart.addEventListener("click", ()=>{
     gameData.level = 0
 
 });
+
+
+
 
 gameLoop();

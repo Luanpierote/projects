@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
 
     <link rel="stylesheet" href="src/style.css">
 </head>
+
 <body>
     <section class="score-ui">
         <div>
@@ -16,24 +18,46 @@
         </div>
     </section>
 
-    <section class="start-screen screen">  <!-- duas classes juntas para aproveitar propriedades CSS  -->
+    <section class="start-screen screen active"> <!--  duas classes juntas para aproveitar propriedades CSS   -->
         <div>
             <h1>Space Invaders</h1>
             <button class="button-play">Play</button>
+            <button class="button-controls">Controls</button>
         </div>
 
         <span>Feito por:Luan</span>
     </section>
 
-    <section class="game-over screen">
+    <section class="game-over screen active">
         <div>
             <h1>Game Over</h1>
             <button class="button-restart">Restart</button>
         </div>
 
     </section>
-    
+
+      <section class="controls-screen screen ">
+        
+        <div>
+        <h1>controles:</h1>
+        
+        <p>
+            Esquerda = A 
+            
+        </p>
+        <p> 
+            Direita = D
+        </p>
+        <p>
+            Atirar = K
+        </p>
+            <button class="button-return">Return</button>
+        </div>
+
+    </section> 
+
     <canvas></canvas>
     <script type="module" src="src/index.js"></script> <!-- type module, para aceitar impors e exports JS -->
 </body>
+
 </html>

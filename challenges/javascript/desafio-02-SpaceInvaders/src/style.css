@@ -13,6 +13,10 @@ canvas{
 }
 
 .screen{
+    display: none;
+}
+
+.screen.active{
     width: 100%;
     height: 100vh;
     display: flex;
@@ -41,8 +45,17 @@ canvas{
     margin-top: auto; /* o texto é empurrado para baixo,centralizando na tela */
 }
 
+.controls-screen > div {
+    top: 0;
+    left: 0;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
 .button-play , 
-.button-restart{
+.button-restart,
+.button-controls{
     border: none;
     padding: 12px 20px;
     border-radius: 5px;
@@ -64,7 +77,7 @@ canvas{
 }
 
 
-.score-ui{
+.score-ui {
     position: fixed;
     top: 0;
     left: 0;
@@ -74,15 +87,26 @@ canvas{
     padding: 40px;
     text-transform:uppercase;
     font-size: 1rem;
-    display: none; /* só ativa no estado de jogar */
+     display: none;  /* só ativa no estado de jogar  */ 
 }
 
-.score-ui > div{
+.score-ui > div {
     display: flex;
     justify-content: space-between;
     max-width: 600px;
     margin: 0 auto;
 }
+
+.controls-screen > div > h1{
+    margin: 0 0 2rem;
+}
+
+.button-return{
+    margin: 3rem 0 0 ;
+    padding: 10px;
+    border-radius: 5px;
+}
+
 
 
 @keyframes zoom { /* zoom é o nome da animação */

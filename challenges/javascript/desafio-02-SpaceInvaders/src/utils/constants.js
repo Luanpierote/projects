@@ -9,4 +9,6 @@ export const GameState = {
     PLAYING: "playing",
     GAME_OVER: "gameOver",
     OPTION: "controls",
+    RANK: "ranking",
+    REGISTER: "register",
 };

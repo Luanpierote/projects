@@ -6,11 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Invaders</title>
 
-    <link rel="stylesheet" href="src/style.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="./src/assets/images/favicon.png">
 </head>
 
 <body>
-    <section class="score-ui">
+    <canvas id="gameCanvas"></canvas>
+    <section class="score-ui hud">
         <div>
             <span class="score">score: <span>0</span></span>
             <span class="level">level: <span>1</span></span>
@@ -18,46 +20,85 @@
         </div>
     </section>
 
-    <section class="start-screen screen active"> <!--  duas classes juntas para aproveitar propriedades CSS   -->
+    <section class="start-screen screen active">  <!-- duas classes juntas para aproveitar propriedades CSS  --> 
         <div>
             <h1>Space Invaders</h1>
             <button class="button-play">Play</button>
             <button class="button-controls">Controls</button>
+            <button class="button-ranking">Ranking</button>
         </div>
 
         <span>Feito por:Luan</span>
     </section>
 
+      <section class="register screen active">
+        <form  id="register-form">
+            <h1>Parabéns! Novo Recorde!</h1>
+            
+                <p>Insira o seu nome de usuário para registrar</p>
+                <p>uma nova pontuação no ranking.</p>
+            
+                <div class="button-area">
+            <input type="text" name="username" class = "Input-Register" id="usernameInput" placeholder="Nickname" required>
+            <button type="submit" class="button-register">Register</button>
+            </div>
+        </form>
+        </section>
+
     <section class="game-over screen active">
         <div>
             <h1>Game Over</h1>
             <button class="button-restart">Restart</button>
+            <button class="button-menu button-restart">Menu</button>
+        </div>
+    </section >
+
+
+    <section class="controls-screen screen ">
+        <div>
+            <h1>controles:</h1>
+            <p>Esquerda = A </p>
+            <p>Direita = D </p>
+            <p>Atirar = K </p>
+            <button class="button-return">Return</button>
+        </div>
+    </section>
+
+
+    <section class="ranking-screen screen ">
+
+        <div>
+            <h1>Placar de Jogadores:</h1>
+
+            <div class="table">
+                <table>
+                    <caption style="margin: 0 0 1rem; ">
+                        Ranking de Jogadores
+                    </caption>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: left;">Jogador1: </td>
+                            <td>300pts</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">Jogador2: </td>
+                            <td>300pts</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">Jogador3: </td>
+                            <td>300pts</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <button class="button-return">Return</button>
         </div>
 
     </section>
 
-      <section class="controls-screen screen ">
-        
-        <div>
-        <h1>controles:</h1>
-        
-        <p>
-            Esquerda = A 
-            
-        </p>
-        <p> 
-            Direita = D
-        </p>
-        <p>
-            Atirar = K
-        </p>
-            <button class="button-return">Return</button>
-        </div>
 
-    </section> 
-
-    <canvas></canvas>
-    <script type="module" src="src/index.js"></script> <!-- type module, para aceitar impors e exports JS -->
+    <script type="module" src="index.js"></script> <!-- type module, para aceitar impors e exports JS -->
 </body>
 
 </html>

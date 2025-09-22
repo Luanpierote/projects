@@ -1,16 +1,20 @@
-import Player from "./classes/Player.js";
-import Grid from "./classes/Grid.js";
-import Particle from "./classes/Particles.js";
-import { GameState } from "./utils/constants.js";
-import Obstacle from "./classes/Obstacle.js";
-import SoundEffects from "./classes/SoundEffects.js";
+import Player from "./src/classes/Player.js";
+import Grid from "./src/classes/Grid.js";
+import Particle from "./src/classes/Particles.js";
+import { GameState } from "./src/utils/constants.js";
+import Obstacle from "./src/classes/Obstacle.js";
+import SoundEffects from "./src/classes/SoundEffects.js";
 
 const soundEffects = new SoundEffects();
 
 const startScreen = document.querySelector(".start-screen");
 const buttonControls = document.querySelector(".button-controls");
-const buttonReturn = document.querySelector(".button-return");
+const buttonRanking = document.querySelector(".button-ranking");
+const buttonReturn = document.querySelectorAll(".button-return");
+const buttonRegister = document.querySelector(".button-register");
 const controlsScreen = document.querySelector(".controls-screen");
+const rankingScreen = document.querySelector(".ranking-screen");
+const registerScreen = document.querySelector(".register");
 const gameOverScreen = document.querySelector(".game-over");
 const scoreUI = document.querySelector(".score-ui");
 const scoreElement = document.querySelector(".score > span");
@@ -18,8 +22,13 @@ const levelElement = document.querySelector(".level > span");
 const highElement = document.querySelector(".high > span");
 const buttonPlay = document.querySelector(".button-play");
 const buttonRestart = document.querySelector(".button-restart");
+const registerForm = document.getElementById("register-form");
+const usernameInput = document.getElementById("usernameInput");
+const buttonMenu = document.querySelector(".button-menu");
+
 
 gameOverScreen.remove();
+
 
 /* o canvas funciona como uma folha de desenho */
 const canvas = document.querySelector("canvas");
@@ -52,11 +61,15 @@ const showGameData = () => {
     highElement.textContent = gameData.high;
 }
 
+
+
 /* por padrão, o padrão de posicionamento do eixo (0,0) 
 fica localizado no canto superior esquerdo */
 
 /* ctx.fillStyle = "red"; /* define o estilo de preenchimento, antes de desenhar 
 ctx.fillRect(100, 0, 100, 100)  desenho */
+
+let playerLifes = 2; // lógica temporária para 
 
 const player = new Player(canvas.width, canvas.height) /* os argumentos serão enviados para o parametro do construtor */
 const grid = new Grid(3, 6);
@@ -80,7 +93,6 @@ const initObstacle = () => {
 }
 
 initObstacle();
-
 
 const keys = {
     left: false,
@@ -247,8 +259,16 @@ const gameOver = () => {
 
     currentState = GameState.GAME_OVER;
     player.alive = false;
-    document.body.append(gameOverScreen)
+    playerLifes --;
+    if(playerLifes < 2 && playerLifes > 0){
+        registerScreen.classList.add("active")
+         document.body.append(registerScreen); 
+    }else{
+    document.body.append(gameOverScreen);
+    }
 }
+
+registerScreen.remove();
 
 
 /* const p = new Particle({x:350,y:500}, {x:-5,y:-2},50,"crimson") */
@@ -352,20 +372,29 @@ addEventListener("keyup", (e) => {
     }
 });
 
+// lista com todas as telas possíveis
+const screens = [startScreen, controlsScreen, rankingScreen, gameOverScreen,registerScreen];
 
+// huds
+const huds = [scoreUI];
+
+//Função genérica de controle de classes( não preciso encaixar "display:none" em toda nova screen que crio)
 const showScreen = (screen) => {
-    // lista com todas as telas possíveis
-    const screens = [startScreen, controlsScreen];
-    
     screens.forEach(s => s.classList.remove("active")); // tira a classe "active" de todos os elementos do array, menos o que eu escolhi
     screen.classList.add("active"); // adiciona "active" apenas na tela que eu quero mostrar
+}
+
+// função para HUDs
+const showHud = (hud) => {
+    huds.forEach(h => h.classList.remove("active"));
+    if (hud) hud.classList.add("active"); // permite "desligar todas" passando null
 }
 
 // Início do jogo
 buttonPlay.addEventListener("click", () => {
     //tive que fazer uma adaptação por ser uma HUD do jogo, e não uma tela interativa
-    scoreUI.style.display = "block";
-    showScreen(scoreUI);
+    showScreen(gameOverScreen);
+    showHud(scoreUI);
     currentState = GameState.PLAYING;
 
     setInterval(() => {
@@ -382,13 +411,32 @@ buttonControls.addEventListener("click", () => {
     currentState = GameState.OPTION;
 });
 
-// Retornar para o menu
-buttonReturn.addEventListener("click", () => {
+buttonRanking.addEventListener("click", () =>{
+    showScreen(rankingScreen);
+    currentState = GameState.RANK;
+
+})
+
+// Retornar para o menu ( for each para iterar sobre todos os buttonReturn presentes no html)
+buttonReturn.forEach(button => {
+button.addEventListener("click", () => {
     showScreen(startScreen);
     currentState = GameState.START;
 });
+});
 
+buttonMenu.addEventListener("click", ()=>{
+    scoreUI.classList.remove("active");
+    currentState = GameState.START;
+    showScreen(startScreen);
+    
+    
+    gameOverScreen.remove();
 
+    gameData.score = 0;
+    gameData.level = 0;
+
+});
 
 buttonRestart.addEventListener("click", ()=>{
     currentState = GameState.PLAYING
@@ -407,6 +455,34 @@ buttonRestart.addEventListener("click", ()=>{
 
 });
 
+/* buttonMenu.addEventListener("click", ()=>{
+    currentState = GameState.START;
+    gameOverScreen.remove();
+}); */
+
+registerForm.addEventListener("submit", (e) => { // Esta função precisa ficar no início do código para poder capturar o evento
+    e.preventDefault(); // impede o comportamento padrão de enviar o form
+
+    const username = usernameInput.value.trim().toLowerCase();
+    if (!username) return; // evita enviar vazio
+
+
+    console.log("Usuário registrado:", username, "Score:", gameData.score);
+
+    // Reinicia a partida (pode reutilizar a função do buttonRestart)
+    currentState = GameState.PLAYING; 
+    player.alive = true;
+    grid.invaders.length = 0;
+    grid.invaderVelocity = 1;
+    invadersProjectiles.length = 0;
+    gameOverScreen.remove();
+    registerScreen.remove(); 
+    gameData.score = 0;
+    gameData.level = 0;
+
+   
+    showHud(scoreUI);
+}); 
 
 
 

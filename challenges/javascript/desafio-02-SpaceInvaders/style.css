@@ -8,8 +8,10 @@
     font-family: "Press Start 2P", system-ui;
 }
 
-canvas{
+#gameCanvas{
     background-color: #121212;
+    position: absolute;
+      z-index: 0;    
 }
 
 .screen{
@@ -23,10 +25,12 @@ canvas{
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    text-align: center;
     position: absolute;
     color:  white;
     top: 0; /* tela fixa no topo */
     left: 0; /* tela fixa na esquerda*/
+    
 } 
 
 .screen h1{
@@ -53,9 +57,25 @@ canvas{
     text-align: center;
 }
 
+.ranking-screen > div{
+    top: 0;
+    left: 0;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.score-ui > div {
+    display: flex;
+    justify-content: space-between;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
 .button-play , 
 .button-restart,
-.button-controls{
+.button-controls,
+.button-ranking{
     border: none;
     padding: 12px 20px;
     border-radius: 5px;
@@ -67,13 +87,32 @@ canvas{
 }
 
 .button-play:hover,
-.button-restart:hover{
+.button-restart:hover,
+.button-register:hover{
     background-color: white;
+}
+
+.button-register{
+    border: none;
+    padding: 12px 20px;
+    background-color: #ddd;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.Input-Register{
+     padding: 12px 20px;
+     border: none;
 }
 
 .game-over{
     scale: 0;
     animation: zoom 2s ease-in-out forwards; /* nome da keyframe, tempo de animação, estilo, estado(manter no final) */
+}
+
+.register{
+    scale: 0;
+    animation: zoom 2s ease-in-out forwards;
 }
 
 
@@ -90,24 +129,57 @@ canvas{
      display: none;  /* só ativa no estado de jogar  */ 
 }
 
-.score-ui > div {
-    display: flex;
-    justify-content: space-between;
-    max-width: 600px;
-    margin: 0 auto;
+.register > form > h1,
+.register > form > p{
+    
+    margin: 1rem auto 1rem;
+}
+
+
+.hud {
+  display: none;
+}
+
+.hud.active {
+  display: block; /* ou flex, depende do seu layout */
 }
 
 .controls-screen > div > h1{
     margin: 0 0 2rem;
 }
 
+.ranking-screen > div >  h1{
+    margin: 0 0 2rem; 
+}
+
+.ranking-screen > div > caption{
+    margin: 0 0 2rem; 
+}
+
 .button-return{
     margin: 3rem 0 0 ;
     padding: 10px;
     border-radius: 5px;
+    border: none;
+    cursor: pointer;
 }
 
+.ranking-screen .table {
+    width: 100%;              /* ocupa todo o container */
+    display: flex;            /* para centralizar */
+    justify-content: center;  /* centraliza horizontalmente */
+}
 
+.ranking-screen table {
+    width: 60%;              
+    border-collapse: collapse;/* borda colada */
+    border: 2px solid white;  /* borda branca */
+}
+
+.ranking-screen table td {
+    border: 1px solid white;  /* bordas das células */
+    padding: 0.5rem;          /* espaçamento interno */
+}
 
 @keyframes zoom { /* zoom é o nome da animação */
     from {/* ponto de partida */

@@ -88,7 +88,10 @@
 
 .button-play:hover,
 .button-restart:hover,
-.button-register:hover{
+.button-register:hover,
+.button-return:hover,
+.button-ranking:hover,
+.button-controls:hover{
     background-color: white;
 }
 

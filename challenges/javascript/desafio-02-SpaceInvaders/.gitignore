@@ -1,1 +1,13 @@
 .env.local
+
+jpconfig.json
+
+node_modules
+
+package.json
+
+package-lock.json
+
+next.js
+
+vercel.json

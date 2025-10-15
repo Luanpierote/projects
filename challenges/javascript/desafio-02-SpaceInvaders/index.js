@@ -429,8 +429,7 @@ buttonMenu.addEventListener("click", ()=>{
     scoreUI.classList.remove("active");
     currentState = GameState.START;
     showScreen(startScreen);
-    
-    
+
     gameOverScreen.remove();
 
     gameData.score = 0;
@@ -441,7 +440,6 @@ buttonMenu.addEventListener("click", ()=>{
 buttonRestart.addEventListener("click", ()=>{
     currentState = GameState.PLAYING
     player.alive = true
-
 
     grid.invaders.length = 0; /* reiniciando um array */
     grid.invaderVelocity = 1;
@@ -466,7 +464,6 @@ registerForm.addEventListener("submit", (e) => { // Esta função precisa ficar 
     const username = usernameInput.value.trim().toLowerCase();
     if (!username) return; // evita enviar vazio
 
-
     console.log("Usuário registrado:", username, "Score:", gameData.score);
 
     // Reinicia a partida (pode reutilizar a função do buttonRestart)
@@ -480,10 +477,20 @@ registerForm.addEventListener("submit", (e) => { // Esta função precisa ficar 
     gameData.score = 0;
     gameData.level = 0;
 
-   
     showHud(scoreUI);
 }); 
 
+
+/*Se o acesso a tabela Rank de Usuários do banco de dados for um sucesso{
+
+1. remova todos os itens fictícios da tabela de jogadores.
+
+2. crie novos elementos reais na tabela(Ex: usando document.creatElement())
+
+3. Dê o appendChild() para exibir estes elementos
+
+
+}*/
 
 
 gameLoop();

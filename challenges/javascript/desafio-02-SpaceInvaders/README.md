@@ -1,13 +1,14 @@
 <h1 align="center">Space Invaders 👾 — Projeto Pessoal </h1>
 
- <img src="./src/assets/images/favicon.png" alt="Ícone do jogo" width="100" height="100">
+<p align="center">
+  <img src="./src/assets/images/icon.png" alt="Ícone do jogo" width="100" height="100">
+</p>
 
   Este é um projeto pessoal desenvolvido com base nos aprendizados obtidos através do canal [Manual do Dev](https://www.youtube.com/@ManualdoDev), que foi fundamental para minha evolução e compreensão prática de lógica de jogos em JavaScript.
 
 ## Table of contents
 
 - [Overview](#overview)
-  - [The challenge](#the-challenge)
   - [Screenshot](#screenshot)
   - [Links](#links)
 - [My process](#my-process)

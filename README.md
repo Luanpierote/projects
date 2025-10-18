@@ -5,6 +5,8 @@ Este repositório reúne **todos os meus projetos** de implementação de softwa
 
 ## ➤ Estrutura 
 
+ `academic/` → pequenas atividades academicas envolvendo programação em várias linguagens.
+
  `challenges/` → pequenos desafios de programação em várias linguagens.
 
  Cada projeto ou desafio possui seu próprio `README.md` com detalhes sobre:

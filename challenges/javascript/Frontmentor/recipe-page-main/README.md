@@ -1,6 +1,6 @@
 <h1 align="center">Recipe page solution 📖 - Frontend Mentor </h1>
 
-  Esta é uma solução feita para o [desafio da página de receitas no Frontend Mentor](https://www.frontendmentor.io/challenges/recipe-page-KiTsR8QQKm).
+  Esta é uma solução feita para o [desafio da página de receitas no Frontend Mentor](https://www.frontendmentor.io/challenges/recipe-page-KiTsR8QQKm), com o objetivo de aplicar conceitos fundamentais de CSS, incluindo layout, tipografia, cores e responsividade.
 
 ## Table of contents
 
@@ -16,7 +16,6 @@
 - [Author](#author)
 - [Acknowledgments](#acknowledgments)
 
-**Note: Delete this note and update the table of contents based on what sections you keep.**
 
 ## Overview
 

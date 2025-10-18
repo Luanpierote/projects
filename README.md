@@ -1,6 +1,6 @@
 <h1 align="center">Projects - Meu Portfólio de Projetos</h1>
 
-➤ Este repositório reúne **todos os meus projetos** de implementação de software , incluindo desafios de programação separados em uma pasta organizada `challenges/`. O objetivo é registrar minha evolução como desenvolvedor e compartilhar soluções cada vez mais criativas e dinâmicas.
+Este repositório reúne **todos os meus projetos** de implementação de software , incluindo desafios de programação separados em uma pasta organizada `challenges/`. O objetivo é registrar minha evolução como desenvolvedor e compartilhar soluções cada vez mais criativas e dinâmicas.
 
 
 ## ➤ Estrutura 

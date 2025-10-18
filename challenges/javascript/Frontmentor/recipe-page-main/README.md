@@ -1,4 +1,4 @@
-# Frontend Mentor - Recipe page solution
+<h1 align="center">Recipe page solution 📖 - Frontend Mentor </h1>
 
   Esta é uma solução feita para o [desafio da página de receitas no Frontend Mentor](https://www.frontendmentor.io/challenges/recipe-page-KiTsR8QQKm).
 

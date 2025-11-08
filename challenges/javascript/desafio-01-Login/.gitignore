@@ -4,6 +4,6 @@ package.json
 
 package-lock.json
 
-controllerJWT.mjs
+controllerJWT.js
 
 .env

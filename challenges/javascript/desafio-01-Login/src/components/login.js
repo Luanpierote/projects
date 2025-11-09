@@ -1,8 +1,3 @@
-/* var username = ['andre'];
-var password = ['1234'];  */
-
-
-
 //Definição das chaves e valores do array de objetos
 const users = [
     {
@@ -17,8 +12,7 @@ const users = [
 ]
 
 //Transformar o Array em código binário para o HMAC ler - Alternativa para Autenticação de Sistema
-const SECRET = new TextEncoder().encode(users);
-
+/* const SECRET = new TextEncoder().encode(users); */
 
 //Emissão de um evento ao enviar o formulário
 document.getElementById("loginForm").addEventListener("submit", async function (e) {
@@ -41,7 +35,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
                 body: JSON.stringify({ userFound }),
             });
 
-            console.log(response.data)
+            const data = await response.json();
 
             // recebe a resposta positiva, e envia o usuário para a página correta 'window.location.href = '../public/home.html'
             if (response.ok) {
@@ -49,13 +43,15 @@ document.getElementById("loginForm").addEventListener("submit", async function (
                 //armazenar o token no local storage
                 /* localStorage.setItem('token', token); */
                 window.location.href = '/home.html'
-
+                console.log(data.token);
+                //Funciona!
+                localStorage.setItem('token',data.token) //criou o Token e definiu
                 /*MÉTODO COM ROUTER 
                  res.redirect("http://localhost:3000/public/home.html") */
             } else {
                 alert("acesso inválido")
             }
-    }else{
+        } else {
             const mensageErr = document.getElementById("erro");
 
             mensageErr.innerHTML = "Usuário ou senha incorretos! Tente Novamente";
@@ -64,7 +60,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
             /*  mensgErr.style.display = 'block';   FUTURA MENSAGEM DE ERRO  */
             return { success: false, message: "Usuário ou senha incorretos! Tente Novamente" }
         }
-}
+    }
     catch (err) {
         //emite um erro de servidor ou de comunicação mal sucedida
         //tratamento do erro 401(não autorizado), o usuário não pode acessar , diretamente, a próxima página html se ele não for autorizado pelo servidor que gerou o Token
@@ -74,32 +70,9 @@ document.getElementById("loginForm").addEventListener("submit", async function (
 
 /*Pendencias:
 
-1.criar uma função assincrona para gerar uma assinatura digital com os usuários cadastrados
-2.Acionar um tempo fixo assincrono de expiração, com duração de 5min pelo menos. E devolver o usuário para a página de Login após o tempo terminar.
-3.criar uma função para Validar as credenciais dos usuários e efetuar uma sessão, de curta duração, com o Login( Redirecionando-os para outra página )
-
-
-Oque eu fiz nesse código?
-Uma simulação de token gerado a partir dos dados de usuários armazenados por um array de objetos, representado como uma sequencia de caracteres codificados em base64.
-A solução então, percorre esse array, verifica a autenticação do usuário no login, decodifica o token gerado convertendo o texto para JSON, e retorna a operação 
-como bem sucedida.
-
-Oque eu compreendi realmente sobre isso?
-módulos nativos JS para serialização de Strings, conversão de valores e objetos, tipos de criptografia e hashing de senhas. 
-
-Oque falta? 
-Incorporar estados dos objetos no meu projeto, para rastrear o mesmento que o token é expirado em tempo real e encerrar a sessão do sistema.
-
-Como chegar nesse resultado? Quais são as alternativas?
-Primeiramente criar um servidor de aplicação que execute o projeto em tempo real, depois delegar as funções client side do Back end, e então 
-desenvolver APIs que se comunicam por rotas para estabelecer a conexão. Encriptar o email de usuário e senha utilizando JWT, e rastrear o tempo
-de expiração do token invalidando o login do usuário após um tempo determinado.
-
-que feedback eu posso tirar do que eu fiz?
-
-Oque um programador faria para melhorar isso?
-
-
+1.criar uma função assincrona para gerar uma assinatura digital com os usuários cadastrados✅
+2.Acionar um tempo fixo assincrono de expiração, com duração de 5min pelo menos. E devolver o usuário para a página de Login após o tempo terminar.✅
+3.criar uma função para Validar as credenciais dos usuários e efetuar uma sessão, de curta duração, com o Login( Redirecionando-os para outra página )✅
 */
 
 

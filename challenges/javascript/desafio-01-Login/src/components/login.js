@@ -21,7 +21,7 @@ const SECRET = new TextEncoder().encode(users);
 
 
 //Emissão de um evento ao enviar o formulário
-document.getElementById("loginForm").addEventListener("submit", function (e) {
+document.getElementById("loginForm").addEventListener("submit", async function (e) {
 
     e.preventDefault(); // bloqueia eventos padrões das tags
 
@@ -30,28 +30,47 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
 
     const userFound = users.find(u => u.nome === nome && u.senha === senha); // método de iteração dos arrays
     //obs: for(let i in users) também funciona,mas com bugs
-    
-    if (userFound) {
-        alert("sucesso");
+    try {
+        if (userFound) {
+            alert("sucesso");
 
-        const token = btoa(JSON.stringify({ id: userFound.id, name: userFound.nome, exp: Date.now() + 60000 })); //simulando a criação de um novo token, utilizando base64
-        console.log("Login ok, token gerado", token);
+            //Fetch API para enviar as credenciais do usuário via endpoint,retornando uma resposta contendo um Token JWT e o tempo de expiração em  HMAIC 
+            const response = await fetch("http://localhost:3000/api/login", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userFound }),
+            });
 
-        const decode = JSON.parse(atob(token)) //atob - decodifica base64
+            console.log(response.data)
 
-        return { success: true, token } && console.log(decode) && console.log(token);
+            // recebe a resposta positiva, e envia o usuário para a página correta 'window.location.href = '../public/home.html'
+            if (response.ok) {
+                //MÉTODO COM FRONT END
+                //armazenar o token no local storage
+                /* localStorage.setItem('token', token); */
+                window.location.href = '/home.html'
 
-    } else {
-        const mensageErr = document.getElementById("erro");
+                /*MÉTODO COM ROUTER 
+                 res.redirect("http://localhost:3000/public/home.html") */
+            } else {
+                alert("acesso inválido")
+            }
+    }else{
+            const mensageErr = document.getElementById("erro");
 
-        mensageErr.innerHTML = "Usuário ou senha incorretos! Tente Novamente";
-        mensageErr.style.display = "block";
-        /* const mensgErr = document.getElementById('mensagem-erro') FUTURA MENSAGEM DE ERRO */
-        /*  mensgErr.style.display = 'block';   FUTURA MENSAGEM DE ERRO  */
-        return { success: false, message: "Usuário ou senha incorretos! Tente Novamente" }
+            mensageErr.innerHTML = "Usuário ou senha incorretos! Tente Novamente";
+            mensageErr.style.display = "block";
+            /* const mensgErr = document.getElementById('mensagem-erro') FUTURA MENSAGEM DE ERRO */
+            /*  mensgErr.style.display = 'block';   FUTURA MENSAGEM DE ERRO  */
+            return { success: false, message: "Usuário ou senha incorretos! Tente Novamente" }
+        }
+}
+    catch (err) {
+        //emite um erro de servidor ou de comunicação mal sucedida
+        //tratamento do erro 401(não autorizado), o usuário não pode acessar , diretamente, a próxima página html se ele não for autorizado pelo servidor que gerou o Token
+        console.log(err);
     }
-
-})
+});
 
 /*Pendencias:
 

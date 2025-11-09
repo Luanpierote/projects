@@ -1,23 +1,29 @@
 //FUNÇÃO EM DESENVOLVIMENTO
+import express from 'express';
 
+const router = express.Router();
 
-async function redirectLogin(req,res){
-    const {nome,senha} = req.body;
+//Missão: Client Side = confirmar conta + Consumir essa API que irá iniciar uma nova sessão de usuário a partir de um Token gerado
+router.post("/login", (req, res) => {
+    const { userFound } = req.body;
 
-    const response = await fetch("http://localhost:3000/api/login",{
-        method:'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({nome,senha}),
-    });
-    if(response.ok){
-        const usuario = await response.json();
-        //Se o JSON retornar o boolean{sucess: true}
-        if(usuario.sucess){
-            window.location.href = '../public/home.html'
-        }else{
-            alert('não foi possível efetuar o Login! tente novamente')
-        }
+    if (userFound) {
+        //Recebe as credenciais válidas do login pelo req.body, e só retorna uma resposta positiva (200) caso o token seja gerado com JWT.
+        res.json({ message: "Acesso autorizado!" });
+    } else {
+        //Pode estar incorreto!!
+        res(403).json('não foi possível efetuar o Login! tente novamente')
     }
+    //receber login e senha corretos e retornar um novo token com o tempo de expiração 
+});
+
+try {
+    // tentativa de criar o token
+    res.sendFile(path.join(__dirname, '../../public/login.html'));
+
+} catch {
+    //Erro interno no servidor
+    //A credencial foi expirada? = restringir o acesso do usuário
 }
 
-module.exports = {redirectLogin};
+export default router;

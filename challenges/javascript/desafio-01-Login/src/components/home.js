@@ -30,7 +30,7 @@ const validarUsuário = async () => {
             window.location.href = '/login.html'; 
         } else {
             //Acesso autorizado
-            console.log(`Acesso Autorizado!, ${response.nome}`)
+            console.log(`Acesso Autorizado!, ${response.body}`)
         }
     } catch (err) {
         //Se der qualquer outro erro, retorna também

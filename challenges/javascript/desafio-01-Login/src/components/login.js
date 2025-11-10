@@ -4,10 +4,10 @@ const users = [
         id: 1, nome: "andre", senha: "1234"
     },
     {
-        id: 2, nome: "ciro", senha: "1234"
+        id: 2, nome: "patricia", senha: "1234"
     },
     {
-        id: 3, nome: "gomes", senha: "1234"
+        id: 3, nome: "andressa", senha: "1234"
     }
 ]
 

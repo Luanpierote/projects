@@ -25,7 +25,7 @@
 
 ## My process
 
-    **➤Instruções para testar a aplicação**
+**➤Instruções para testar a aplicação**
 
 **Clonar o repositório / abrir a pasta no VSCode**
 

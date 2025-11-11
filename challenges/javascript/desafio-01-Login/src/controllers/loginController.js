@@ -36,10 +36,10 @@ router.get("/validacao",(req,res) =>{
     const autHeader = req.headers['authorization'];
     const token = autHeader && autHeader.split(' ')[1];
 
-    if(!token)return res.status(403).json({error: "não autorizado, não achei o token"});
+    if(!token)return res.status(403).json({error: "acesso não autorizado, token inválido."});
 
     jwt.verify(token,SECRET,(err,nome)=>{
-        if(err)return res.status(403).json({error: "não autorizado, na verificação"});
+        if(err)return res.status(403).json({error: "acesso não autorizado."});
 
         res.json({message:"acesso autorizado",nome})
 

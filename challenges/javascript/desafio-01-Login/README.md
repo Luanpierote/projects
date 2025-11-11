@@ -29,31 +29,31 @@
 
 **Clonar o repositório / abrir a pasta no VSCode**
 
-    No repositório Git:
-
-    ```bash
- git clone <URL-DO-REPOSITORIO>
- cd <NOME-DA-PASTA>
- code .
-    ```
+  No repositório Git:
+  
+```bash
+  git clone <URL-DO-REPOSITORIO>
+  cd <NOME-DA-PASTA>
+  code .
+```
 
 **Instalar dependências**
 
-    No terminal do VSCode, dentro da pasta do projeto:
+  No terminal do VSCode, dentro da pasta do projeto:
 
-    ```bash
- npm install express dotenv jsonwebtoken
-    ```
+```bash
+  npm install express dotenv jsonwebtoken
+```
 
 **Iniciar o servidor**
 
 Use o comando que você informou:
 
-    ```bash
- npm run watch
-    ```
+```bash
+    npm run watch
+```
 
-    Depois abra o navegador e acesse:
+  Depois abra o navegador e acesse:
    [http://localhost:3000](http://localhost:3000)
 
  ## ➢ Credenciais de Teste

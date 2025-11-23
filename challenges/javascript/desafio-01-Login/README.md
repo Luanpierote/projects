@@ -60,9 +60,9 @@ Use o comando que você informou:
 
  | Nome de Usuário        | Senha  |
  |------------------------|--------|
- | `andre`                | `1234` |
- | `patricia`             | `1234` |
- | `andressa`             | `1234` |
+ | `andre@gmail.com`      | `1234` |
+ | `patricia@gmail.com`   | `1234` |
+ | `andressa@gmail.com`   | `1234` |
 
 ### Built with
 

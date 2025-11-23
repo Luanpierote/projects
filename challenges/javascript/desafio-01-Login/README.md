@@ -33,7 +33,7 @@
   
 ```bash
   git clone <URL-DO-REPOSITORIO>
-  cd <NOME-DA-PASTA>
+  cd challenges/javascript/desafio-01-Login
   code .
 ```
 
@@ -47,10 +47,10 @@
 
 **Iniciar o servidor**
 
-Use o comando que você informou:
+E por fim, use o comando no terminal:
 
 ```bash
-    npm run watch
+    node ./server.js
 ```
 
   Depois abra o navegador e acesse:

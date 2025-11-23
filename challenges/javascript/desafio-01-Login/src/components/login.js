@@ -1,13 +1,13 @@
 //Definição das chaves e valores do array de objetos
 const users = [
     {
-        id: 1, nome: "andre", senha: "1234"
+        id: 1, nome: "andre@gmail.com", senha: "1234"
     },
     {
-        id: 2, nome: "patricia", senha: "1234"
+        id: 2, nome: "patricia@gmail.com", senha: "1234"
     },
     {
-        id: 3, nome: "andressa", senha: "1234"
+        id: 3, nome: "andressa@gmail.com", senha: "1234"
     }
 ]
 
@@ -70,7 +70,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
 
 /*Pendencias:
 
-1.criar uma função assincrona para gerar uma assinatura digital com os usuários cadastrados✅
+1.criar uma função assincrona para gerar uma assinatura digital dos usuários cadastrados✅
 2.Acionar um tempo fixo assincrono de expiração, com duração de 5min pelo menos. E devolver o usuário para a página de Login após o tempo terminar.✅
 3.criar uma função para Validar as credenciais dos usuários e efetuar uma sessão, de curta duração, com o Login( Redirecionando-os para outra página )✅
 */
